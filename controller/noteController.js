@@ -1,5 +1,6 @@
 const generator = require('../util/generator');
 const memStorage = require('../util/memory.storage');
+const model = require('../model/note.model');
 
 exports.getAllNotes = (req, res) => {
   const seqId = generator.generate();
@@ -11,6 +12,10 @@ exports.getAllNotes = (req, res) => {
   const keys = memStorage.getKyes(memStorage.store);
   const values = memStorage.getValues(memStorage.store);
 
+  const Note = model.Note;
+  let noteObj = new Note(seqId, 'dd', 'dd', 'dd', new Date());
+
+  console.log(noteObj);
   //   console.log(keys, values);
   console.log(JSON.stringify(keys), JSON.stringify(values));
   res.send('get all notes' + seqId);
