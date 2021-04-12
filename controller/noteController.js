@@ -3,19 +3,10 @@ const memStorage = require('../util/memory.storage');
 const model = require('../model/note.model');
 
 exports.getAllNotes = (req, res) => {
-  // const seqId = generator.generate();
-  // memStorage.store.setItem(seqId, '1st key');
-  // const seqId2 = generator.generate();
-  // memStorage.store.setItem(seqId2, '2st key');
-  // const keys = memStorage.getKyes(memStorage.store);
-  // const values = memStorage.getValues(memStorage.store);
-  // const Note = model.Note;
-  // let noteObj = new Note(seqId, 'dd', 'dd', 'dd', new Date());
-  // console.log(noteObj);
-  // //   console.log(keys, values);
-  // console.log(JSON.stringify(keys), JSON.stringify(values));
-  // res.send('get all notes' + seqId);
+  const values = memStorage.getValues(memStorage.store);
+  return res.status(200).send(JSON.stringify(values));
 };
+
 exports.saveNote = (req, res) => {
   const seqId = generator.generate();
   const createdBy = 'admin';
@@ -29,7 +20,6 @@ exports.saveNote = (req, res) => {
       .status(500)
       .send({ errors: `title or content shouldn't be empty!` });
   }
-
   const Note = model.Note;
   let noteObj = new Note(seqId, title, content, createdBy, createdOn);
   memStorage.store.setItem(seqId, noteObj);
