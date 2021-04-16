@@ -55,5 +55,14 @@ exports.updateAllNote = (req, res) => {
 };
 
 exports.deleteAllNote = (req, res) => {
-  res.send('delete note');
+  let noteId = req.params.noteId;
+
+  if (!noteId)
+    return res.status(500).send({ errors: ` noteId shouldn't be empty!` });
+
+  if (!memStorage.store.getItem(noteId))
+    return res.status(500).send({ errors: `noteId is not exist` });
+
+  memStorage.store.removeItem(noteId);
+  return res.status(200).send('Deleted successfully');
 };
